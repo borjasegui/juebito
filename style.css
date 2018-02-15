@@ -1,0 +1,15 @@
+body{
+	background-image: url(https://cdni.rt.com/actualidad/public_images/2015.02/article/54dd6eb971139e0a3f8b456f.jpg);
+    background-repeat: no-repeat;
+    background-size: 2000px;
+    background-position: top;
+
+    text-align: center;
+}
+.card {
+	width: 150px;
+	margin: 0 2px;
+}
+.found{
+	display: inline-block;
+}

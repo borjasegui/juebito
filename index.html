@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>juebito</title>
+	<link rel="stylesheet" href="style.css">
+	<script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+	<h1>Lest Make pairs!!</h1>
+	<div id="card-container"></div>
+
+	<script>
+		   var cartas =["card1", "card2", "", "card4", "card5",
+		                "card6", "card7", "card8", "card9", "card10", 
+		                "card1", "card2", "", "card4", "card5",
+		                "card6", "card7", "card8", "card9", "card10", 
+		                "card1", "card2", "card3", "card4", "card5",
+		                "card6", "card7", "card8", "card9", "card10", 
+		                "card1", "card2", "card3", "card4", "card5",
+		                "card6", "card7", "card8", "card9", "card10"
+		                ];
+
+        var click1 = 18;
+        var click2 = 19;
+        drawCards();
+        function drawCards(){
+			for (var i = 0; i < 20 ; i++) {
+				if(cartas[i] == ""){ 
+					$("#card-container") .append('<div class="card found"><div/>');
+
+				}
+		
+				else if(click1 == i){
+					$("#card-container") .append('<img class="card" src="cards/'+ cartas[click1]+'.png">');
+				}
+				else if(click2 == i) {
+					$("#card-container") .append('<img class="card" src="cards/'+ cartas[click2]+'.png">');
+				}	
+				else {
+					$("#card-container") .append('<img class="card" src="cards/reverse.png">');
+
+				}
+			}
+	   }
+	</script>
+</body>
+</html>
