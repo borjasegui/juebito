@@ -2,50 +2,107 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>juebito</title>
+	<title>Card Game</title>
+
 	<link rel="stylesheet" href="style.css">
+
 	<script
-  src="http://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+	  src="http://code.jquery.com/jquery-3.3.1.min.js"
+	  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	  crossorigin="anonymous"></script>
 </head>
 <body>
-	<h1>Lest Make pairs!!</h1>
-	<div id="card-container"></div>
+	<h1>Make pairs</h1>
+	<div id="cards-container"></div>
 
 	<script>
-		   var cartas =["card1", "card2", "", "card4", "card5",
-		                "card6", "card7", "card8", "card9", "card10", 
-		                "card1", "card2", "", "card4", "card5",
-		                "card6", "card7", "card8", "card9", "card10", 
-		                "card1", "card2", "card3", "card4", "card5",
-		                "card6", "card7", "card8", "card9", "card10", 
-		                "card1", "card2", "card3", "card4", "card5",
-		                "card6", "card7", "card8", "card9", "card10"
-		                ];
+		// 
+		var values = [
+			"card1", "card2", "card3",
+			"card1", "card2", "card3",
+			"card4", "card5", "card6",
+			"card4", "card5", "card6",
+			"card7", "card8", "card9",
+			"card7", "card8", "card9",
+			"card10", "card10"
+		];
 
-        var click1 = 18;
-        var click2 = 19;
-        drawCards();
-        function drawCards(){
-			for (var i = 0; i < 20 ; i++) {
-				if(cartas[i] == ""){ 
-					$("#card-container") .append('<div class="card found"><div/>');
+		values = shuffle(values);
 
-				}
-		
-				else if(click1 == i){
-					$("#card-container") .append('<img class="card" src="cards/'+ cartas[click1]+'.png">');
-				}
-				else if(click2 == i) {
-					$("#card-container") .append('<img class="card" src="cards/'+ cartas[click2]+'.png">');
-				}	
-				else {
-					$("#card-container") .append('<img class="card" src="cards/reverse.png">');
+		function shuffle(array) {
+		    let counter = array.length;
 
+		    // While there are elements in the array
+		    while (counter > 0) {
+		        // Pick a random index
+		        let index = Math.floor(Math.random() * counter);
+
+		        // Decrease counter by 1
+		        counter--;
+
+		        // And swap the last element with it
+		        let temp = array[counter];
+		        array[counter] = array[index];
+		        array[index] = temp;
+		    }
+
+		    return array;
+		}
+
+		var click1 = -1;
+		var click2 = -1;
+
+		var pairs = 0;		
+
+		drawCards();
+
+		function handleClick(index) {
+			if(click1 == -1) {
+				click1 = index;
+				drawCards();
+			} else if (click2 == -1) {
+				click2 = index;
+				drawCards();
+				setTimeout(checkPairs, 1000);
+			}
+		}
+
+		function checkPairs() {
+			if(values[click1] == values[click2]) {
+				values[click1] = "";
+				values[click2] = "";
+				pairs = pairs + 1;
+
+				if(pairs == 10) {
+					$("#cards-container").html('');
+					$("#cards-container").append('<br><br><br><h1>You won !</h1>');
+					return;
 				}
 			}
-	   }
+
+			click1 = -1;
+			click2 = -1;
+
+			drawCards();
+		}
+
+		function drawCards() {
+			$("#cards-container").html('');
+			for(var i = 0; i < 20; i++) {
+				if(values[i] == "") {
+					$("#cards-container").append('<div class="card found"></div>');
+				}
+				else if(i == click1) {
+					$("#cards-container").append('<img class="card" src="cards/' + values[click1] + '.png">');
+				}
+				else if(i == click2) {
+					$("#cards-container").append('<img class="card" src="cards/' + values[click2] + '.png">');
+				}
+				else {
+					$("#cards-container").append('<img class="card" src="cards/reverse.png" onclick="handleClick(' + i + ')">');
+				}
+			}
+		}
 	</script>
 </body>
 </html>
